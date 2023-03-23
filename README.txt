@@ -1,28 +1,11 @@
-REMIX DEFAULT WORKSPACE
+This is a smart contract for a subscription service. The contract allows users to subscribe to the service by setting a subscription rate, and then processes payments for the subscribed users every week.
 
-Remix default workspace is present when:
-i. Remix loads for the very first time 
-ii. A new workspace is created with 'Default' template
-iii. There are no files existing in the File Explorer
+The contract stores subscription information for each user in a mapping called subscriptions, where the key is the user's address and the value is a Subscription struct. The Subscription struct stores three pieces of information: whether the subscription is active, the subscription rate, and the timestamp of the next payment.
 
-This workspace contains 3 directories:
+The subscribe function allows a user to subscribe to the service by setting their subscription rate and creating a new Subscription struct with the current timestamp plus one week as the timestamp of the next payment.
 
-1. 'contracts': Holds three contracts with increasing levels of complexity.
-2. 'scripts': Contains four typescript files to deploy a contract. It is explained below.
-3. 'tests': Contains one Solidity test file for 'Ballot' contract & one JS test file for 'Storage' contract.
+The unsubscribe function allows a user to unsubscribe from the service by setting their subscription to inactive.
 
-SCRIPTS
+The processPayments function is called every week to process payments for subscribed users. The function loops through each user in the subscriptions mapping and checks if their subscription is active and if it's time for the next payment. If so, the function charges the user's account with the subscription rate and updates the next payment timestamp to one week later.
 
-The 'scripts' folder has four typescript files which help to deploy the 'Storage' contract using 'web3.js' and 'ethers.js' libraries.
-
-For the deployment of any other contract, just update the contract's name from 'Storage' to the desired contract and provide constructor arguments accordingly 
-in the file `deploy_with_ethers.ts` or  `deploy_with_web3.ts`
-
-In the 'tests' folder there is a script containing Mocha-Chai unit tests for 'Storage' contract.
-
-To run a script, right click on file name in the file explorer and click 'Run'. Remember, Solidity file must already be compiled.
-Output from script will appear in remix terminal.
-
-Please note, require/import is supported in a limited manner for Remix supported modules.
-For now, modules supported by Remix are ethers, web3, swarmgw, chai, multihashes, remix and hardhat only for hardhat.ethers object/plugin.
-For unsupported modules, an error like this will be thrown: '<module_name> module require is not supported by Remix IDE' will be shown.
+Overall, this smart contract provides a basic subscription service that can be used as a starting point for more complex subscription models.
